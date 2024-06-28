@@ -55,19 +55,19 @@ export default function LoginForm() {
       <div className="hidden sm:block">
         <img
           className="w-full h-full rounded-l-lg object-cover shadow-[0_3px_10px_rgb(0,0,0,0.5)]"
-          src="/assets/lineas1.jpg"
+          src="/assets/background.png"
           alt="Login"
         />
       </div>
-      <div className="bg-fray-800 flex flex-col bg-gray-200 relative justify-center rounded-r-lg shadow-[0_3px_10px_rgb(0,0,0,0.5)]">
+      <div className="bg-fray-800 flex flex-col bg-neutral-800 relative justify-center rounded-r-lg shadow-[0_3px_10px_rgb(0,0,0,0.5)]">
         <form
           onSubmit={handleSubmit(onSubmitFunction)}
-          className="max-w-[400px]-w-full mx-20 bg-gray-900 p-10 px-8 rounded-lg"
+          className="max-w-[400px]-w-full mx-20 bg-rose-600 p-10 px-8 rounded-lg"
         >
           <h2 className="text-4xl text-white font-bold text-center">
             INICIAR SESION
           </h2>
-          <div className="flex flex-col text-gray-400 py-2">
+          <div className="flex flex-col text-gray-50 py-2">
             <label>Correo electrónico</label>
             <Input
               errors={errors}
@@ -75,11 +75,11 @@ export default function LoginForm() {
               register={register}
               nameRegister="email"
               placeholder="tucorreo@gmail.com"
-              className="w-full rounded-lg bg-gray-700 mt-2 p-2 focus:border-bñlue-500 focus:bg-gray-800 focus:outline-none"
+              className="w-full rounded-lg bg-rose-50 mt-2 p-2 focus:border-rose-800 focus:bg-rose-100 focus:outline-none"
               type="text"
             />
           </div>
-          <div className="flex flex-col text-gray-400 relative py-2">
+          <div className="flex flex-col text-gray-50 relative py-2">
             <label>Contraseña</label>
             <Input
               errors={errors}
@@ -87,7 +87,7 @@ export default function LoginForm() {
               register={register}
               nameRegister="password"
               placeholder="***********"
-              className="w-full rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+              className="w-full rounded-lg bg-rose-50 mt-2 p-2 focus:border-rose-800 focus:bg-rose-100  focus:outline-none"
               typeInput={visible === false ? "password" : "text"}
             />
              <div className="text-2xl absolute my-11 right-2 text-gray-400">
@@ -99,7 +99,7 @@ export default function LoginForm() {
             </div>
           </div>
 
-          <div className="flex justify-between text-gray-400 py-2">
+          <div className="flex justify-between text-gray-50 py-2">
             <p className="flex items-center">
               <input
                 className="mr-2"
@@ -109,11 +109,11 @@ export default function LoginForm() {
               />
               Recordarme
             </p>
-            <p className="text-gray-400 text-sm hover:cursor-pointer hover:underline hover:text-blue-800" onClick={() => navigate('/reset-pwd')}>
+            <p className="text-gray-50 text-sm hover:cursor-pointer hover:underline hover:text-blue-800" onClick={() => navigate('/reset-pwd')}>
              Olvidé la contraseña
             </p>
           </div>
-          <button className="w-full my-5 py-2 bg-stone-400 shadow-lg duration-200 shadow-teal hover:shadow-teal-50/30 text-gray-800 font-bold rounded-lg">
+          <button className="w-full my-5 py-2 bg-neutral-800 shadow-lg duration-200 shadow-teal hover:shadow-neutral-800/90 text-gray-50 font-bold rounded-lg">
             INGRESAR
           </button>
         </form>

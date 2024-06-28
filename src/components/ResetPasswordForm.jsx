@@ -58,7 +58,7 @@ export default function ResetPasswordForm() {
       <div className="hidden sm:block">
         <img
           className="w-full h-full rounded-l-lg object-cover shadow-[0_3px_10px_rgb(0,0,0,0.5)]"
-          src="/assets/lineas1.jpg"
+          src="/assets/background2.png"
           alt="Login"
         />
       </div>

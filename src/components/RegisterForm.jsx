@@ -69,7 +69,7 @@ export default function RegisterForm() {
           alt="Login"
         />
       </div>
-      <div className="bg-fray-800 flex flex-col bg-stone-200 relative justify-center rounded-r-lg shadow-[0_3px_10px_rgb(0,0,0,0.5)]">
+      <div className="bg-fray-800 flex flex-col bg-neutral-800 relative justify-center rounded-r-lg shadow-[0_3px_10px_rgb(0,0,0,0.5)]">
         <form
           onSubmit={handleSubmit(onSubmitFunction)}
           className="max-w-[400px]-w-full mx-20 bg-gray-900 p-10 px-8 rounded-lg"
@@ -109,7 +109,7 @@ export default function RegisterForm() {
             </div>
           </div>
 
-          <button className="w-full my-5 py-2 bg-stone-400 shadow-lg shadow-teal hover:shadow-teal-50/30 text-gray-800 font-bold rounded-lg">
+          <button className="w-full my-5 py-2 bg-neutral-800 shadow-lg shadow-teal hover:shadow-teal-50/30 text-gray-800 font-bold rounded-lg">
             REGISTRARSE
           </button>
         </form>

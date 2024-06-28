@@ -8,7 +8,6 @@ import Swal from 'sweetalert2'
 
 import { useAuth } from "../context/authContext";
 
-
 import Select from "react-select";
 import {
   FaFileAlt,
@@ -21,7 +20,7 @@ import {
 } from "react-icons/fa";
 import DocsCard from "./DocsCard";
 import Return from "./Return";
-import { firestore, storage } from "../firebase";
+import { firestore, storage } from "../firebase";  // Ensure storage is imported correctly
 import useSearchStore from '../store/searchStore'
 import {
   doc,
@@ -36,31 +35,31 @@ import {
 const Documentation = () => {
   const [result, setResult] = useState([]);
   const [searchResultsByName, setSearchResultsByName] = useState([]);
-  const { search, filter, setSearch } = useSearchStore()
+  const { search, filter, setSearch } = useSearchStore();
 
   const { user, logout } = useAuth();
 
   const suppliers = [
     { value: "1", label: "Código" },
     { value: "2", label: "Nombre" },
-  ]
+  ];
 
   const [searchErrorMessage, setSearchErrorMessage] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleAddProduct = async () => {
     navigate("/add-product");
   };
 
   const handleReturn = async () => {
-    setSearch("")
+    setSearch("");
     navigate("/module");
   };
 
   const handleSelectChange = (e) => {
-    setSearch(search, e)
+    setSearch(search, e);
   };
 
   const handleNameCardClick = (codigo) => {
@@ -71,19 +70,16 @@ const Documentation = () => {
 
   const [searchType, setSearchType] = useState(suppliers[0]);
 
-
   const searchProductByCode = async (product, filter) => {
-
     const docRef = doc(firestore, "productos", String(product));
     const docSnap = await getDoc(docRef);
-    console.log(docSnap.data())
+    console.log(docSnap.data());
 
     if (docSnap.exists()) {
       setResult(docSnap.data());
-      setSearch(product, filter)
+      setSearch(product, filter);
     }
-
-  }
+  };
 
   const searchProductByName = async (product, filter) => {
     const q = query(
@@ -92,47 +88,42 @@ const Documentation = () => {
       where("nombre", "<=", product + 'z')
     );
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot)
+    console.log(querySnapshot);
     const searchResults = [];
     querySnapshot.forEach((doc) => {
       searchResults.push(doc.data());
-
     });
 
     if (searchResults.length > 0) {
-      setSearch(product, filter)
+      setSearch(product, filter);
       setResult(searchResults);
-
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    setResult([])
+    setResult([]);
     e.preventDefault();
 
     if (!search) {
-      setSearchErrorMessage("Ingrese un valor de búsqueda")
-      return
+      setSearchErrorMessage("Ingrese un valor de búsqueda");
+      return;
     }
 
     if (searchErrorMessage) setSearchErrorMessage(null);
 
-    console.log(filter)
+    console.log(filter);
 
     if (filter.value === "1") {
       // Búsqueda por ID
       searchProductByCode(search, filter);
       setHasSearched(true);
-
     } else if (filter.value === "2") {
       // Búsqueda por nombre
-
       const q = query(
         collection(firestore, "productos"),
         where("nombre", "==", search) // Busca por el atributo "nombre"
       );
       const querySnapshot = await getDocs(q);
-
       const searchResults = [];
       querySnapshot.forEach((doc) => {
         searchResults.push(doc.data());
@@ -140,18 +131,14 @@ const Documentation = () => {
 
       if (searchResults.length > 0) {
         setResult(searchResults);
-        
       } else {
         // Manejar el caso en que no se encuentren resultados
         setResult([]);
         setSearchResultsByName(searchResults);
-
       }
-      searchProductByName(search, filter)
+      searchProductByName(search, filter);
       setHasSearched(true);
-
     }
-
   };
 
   useEffect(() => {
@@ -159,12 +146,8 @@ const Documentation = () => {
       console.log(search, filter);
       searchProductByCode(search, filter);
       setHasSearched(true);
-      
-    }
-    else setSearch("")
-
-
-  }, [])
+    } else setSearch("");
+  }, []);
 
   return (
     <CardComponent>
@@ -184,7 +167,6 @@ const Documentation = () => {
           <form
             onSubmit={(e) => {
               handleSubmit(e);
-
             }}
             className="flex items-center"
           >
@@ -218,15 +200,12 @@ const Documentation = () => {
               <span className="block sm:inline"> {searchErrorMessage} </span>
             </div>
           )}
-
         </div>
       </div>
 
       {result.length !== 0 && (
-
         <div className="container mt-4">
           <SearchResults searchResults={result} />
-
         </div>
       )}
 
@@ -238,21 +217,17 @@ const Documentation = () => {
               <li key={index}>{item.nombre}</li>
             ))}
           </ul>
-
         </div>
       )}
 
       <div className="absolute" style={{ right: 0, bottom: 4 }}>
-
-        {hasSearched === false && !search && user.role == "admin" && (
-
+        {hasSearched === false && !search && user.role === "admin" && (
           <button
             data-tooltip-id="botonTooltipAdd"
             className="text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-32 2xl:right-44 m-5"
           >
             <FaPlusSquare className="z-0 md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200" onClick={handleAddProduct} />
             <Tooltip id="botonTooltipAdd" effect="float">
-
               Agregar documento
             </Tooltip>
           </button>
@@ -260,7 +235,6 @@ const Documentation = () => {
       </div>
 
       <Return onClick={handleReturn} />
-
     </CardComponent>
   );
 };

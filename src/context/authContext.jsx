@@ -4,11 +4,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
   sendPasswordResetEmail,
 } from "firebase/auth";
-
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, firestore } from "../firebase";
 
@@ -25,18 +22,9 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   const signup = async (email, password) => {
-
-    const info = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    ).then((usuarioFirebase) => {
-      return usuarioFirebase;
-    });
-
-    const docuref = await doc(firestore, `usuarios/${info.user.uid}`);
-    setDoc(docuref, { email: email, rol: "user2" });
-
+    const info = await createUserWithEmailAndPassword(auth, email, password);
+    const docRef = doc(firestore, `usuarios/${info.user.uid}`);
+    await setDoc(docRef, { email: email, rol: "user2" });
     return info;
   };
 
@@ -49,32 +37,33 @@ export function AuthProvider({ children }) {
   const resetPassword = async (email) => sendPasswordResetEmail(auth, email);
 
   useEffect(() => {
-    const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
-  
-      async function getRol(uid) {
-        const docuRef = doc(firestore, `usuarios/${uid}`);
-        const docuCifrada = await getDoc(docuRef);
-
-        if (docuCifrada.exists()) {
-          const infoFinal = docuCifrada.data().rol;
-          currentUser.role = infoFinal;
-        } else {
-          console.log("No such document!");
-        }
-
-        setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        const getRol = async (uid) => {
+          try {
+            const docRef = doc(firestore, `usuarios/${uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+              const infoFinal = docSnap.data().rol;
+              currentUser.role = infoFinal;
+            } else {
+              console.log("No such document!");
+            }
+            setUser(currentUser);
+          } catch (error) {
+            console.error("Error getting document:", error);
+          } finally {
+            setLoading(false);
+          }
+        };
+        getRol(currentUser.uid);
+      } else {
+        setUser(null);
         setLoading(false);
       }
-
-      console.log(currentUser);
-      setUser(currentUser);
-      setLoading(true);
-      getRol(currentUser?.uid);
-  
     });
 
-    return () => unsubuscribe();
-  
+    return () => unsubscribe();
   }, []);
 
   return (
