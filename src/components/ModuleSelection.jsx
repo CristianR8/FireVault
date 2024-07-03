@@ -26,21 +26,21 @@ export function ModuleSelection() {
 
         </div>
         <div className="flex justify-center">
-          <span className="text-gray-900 rounded my-6 p-2 2xl:my-12 text-2xl 2xl:text-3xl font-mono font-semibold">Selecciona un módulo: </span>
+          <span className="text-white-900 rounded my-6 p-2 2xl:my-12 text-2xl 2xl:text-3xl font-mono font-semibold">Selecciona un módulo: </span>
         </div>
         <div className="flex items-center justify-center bg-auto ">
           <div className="flex justify-center gap-4">
             <ImageCard
               imageSrc="/assets/doc.jpg"
               title="Documentación"
-              description="En este módulo encontrarás informacón sobre la documentación de los equipos biomédicos "
+              description="En este módulo encontrarás informacón sobre la documentación de los equipos automotrices"
               onClick={handleDocumentation}
 
             />
             <ImageCard
               imageSrc="/assets/mantenimiento.jpeg"
               title="Cronograma de mantenimiento"
-              description="En este módulo podrás ver el cronograma de mantenimiento para los equipos biomédicos"
+              description="En este módulo podrás ver el cronograma de mantenimiento para los equipos automotrices"
               onClick={handleMaintenance}
             />
           </div>

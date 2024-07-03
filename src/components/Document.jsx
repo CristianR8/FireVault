@@ -144,11 +144,11 @@ const Document = () => {
                     <p className="sm:text-xl lg:text-3xl 2xl:text-5xl font-mono font-semibold ">{title}</p>
                 </div>
                 <div className='flex flex-col items-start mx-16 overflow-hidden'>
-                    <label className='text-gray-900 my-16 font-semibold text-lg 2xl:text-2xl p-2 rounded-lg'>DOCUMENTOS DISPONIBLES:</label>
+                    <label className='text-white my-16 font-semibold text-lg 2xl:text-2xl p-2 rounded-lg'>DOCUMENTOS DISPONIBLES:</label>
 
                     {!filename ? (
                         <>
-                            <label className='text-gray-900 text-xl 2xl:text-2xl text-center mx-auto'>
+                            <label className='text-white text-xl 2xl:text-2xl text-center mx-auto'>
                                 No hay archivos aún en este producto
                             </label>
 
@@ -163,7 +163,7 @@ const Document = () => {
                                 <>
                                     <button
                                         data-tooltip-id="botonUpload"
-                                        className="text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-32 2xl:right-40 m-5"
+                                        className="text-white text-base md:text-md flex items-center justify-center absolute bottom-0 right-32 2xl:right-40 m-5"
                                         onClick={() => inputRef.current.click()}
                                     >
                                         <AiOutlineUpload className='md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200'></AiOutlineUpload>

@@ -40,8 +40,8 @@ const Documentation = () => {
   const { user, logout } = useAuth();
 
   const suppliers = [
-    { value: "1", label: "Código" },
-    { value: "2", label: "Nombre" },
+    { value: "1", label: "Nombre" },
+    { value: "2", label: "Codigo" },
   ];
 
   const [searchErrorMessage, setSearchErrorMessage] = useState(null);
@@ -161,9 +161,9 @@ const Documentation = () => {
       </div>
       <div className="flex justify-center">
         <div className="flex flex-col items-center">
-          <label className="block text-gray-900 text-2xl 2xl:text-3xl font-mono font-semibold mt-4 mb-2 mr-10">
+          <span className="text-white rounded my-6 p-2 2xl:my-12 text-2xl 2xl:text-3xl font-mono font-semibold">
             Búsqueda de productos
-          </label>
+          </span>
           <form
             onSubmit={(e) => {
               handleSubmit(e);
@@ -188,7 +188,7 @@ const Documentation = () => {
             />
             <button
               type="submit"
-              className="w-10 h-10 2xl:w-24 2xl:h-24 ml-3 hover:scale-125 duration-200 text-gray-900 rounded-md"
+              className="w-10 h-10 2xl:w-24 2xl:h-24 ml-3 hover:scale-125 duration-200 text-white rounded-md"
             >
               <BsSearch className="w-6 h-6" />
             </button>
