@@ -12,7 +12,7 @@ export function HomeComponent() {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       alert("Error al cerrar sesión: ", error);
     }

@@ -23,24 +23,24 @@ export function ModuleSelection() {
   const handleLogout = async () => {
     // Add your logout logic here, such as:
     // await auth.signOut();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
-    <div>
+    <div className="bg-neutral-900 w-full h-screen">
       <div className="flex justify-between items-center w-full p-4">
-        <h1 className="text-2xl font-bold">FireVault</h1>
+        <h1 className="text-2xl text-white font-bold">FireVault</h1>
         <div className="bg-rose-600 p-4 rounded-lg shadow-md text-center">
-          <p className="text-3xl 2xl:text-4xl font-mono font-semibold">
+          <p className="text-3xl text-white 2xl:text-4xl font-mono font-semibold">
             SECCIÓN DE MÓDULOS
           </p>
         </div>
         <button
           className="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center space-x-2"
-          onClick={handleLogout}
+          onClick={handleReturn}
         >
           <AiOutlineLogout className="h-6 w-6" />
-          <span>Salir</span>
+          <span>Volver</span>
         </button>
       </div>
       <div className="w-full max-w-screen m-auto text-white">
@@ -66,7 +66,6 @@ export function ModuleSelection() {
           </div>
         </div>
       </div>
-      <Return onClick={handleReturn} />
       </div>
   );
 }
