@@ -67,7 +67,7 @@ export default function LoginForm() {
           <h2 className="text-4xl text-white font-bold text-center">
             INICIAR SESION
           </h2>
-          <div className="flex flex-col text-gray-50 py-2">
+          <div className="flex flex-col text-neutral-800 py-2">
             <label>Correo electrónico</label>
             <Input
               errors={errors}
@@ -75,11 +75,11 @@ export default function LoginForm() {
               register={register}
               nameRegister="email"
               placeholder="tucorreo@gmail.com"
-              className="w-full rounded-lg bg-rose-50 mt-2 p-2 focus:border-rose-800 focus:bg-rose-100 focus:outline-none"
+              className="w-full rounded-lg bg-rose-50 mt-2 p-2 focus:border-rose-800  focus:bg-rose-100 focus:outline-none"
               type="text"
             />
           </div>
-          <div className="flex flex-col text-gray-50 relative py-2">
+          <div className="flex flex-col text-neutral-800 relative py-2">
             <label>Contraseña</label>
             <Input
               errors={errors}

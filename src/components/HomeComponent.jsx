@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
-import CardComponent from "./CardComponent";
-import ImageCardPrincipal from "./ImageCardPrincipal";
+import { AiOutlineLogout } from "react-icons/ai";
 
 export function HomeComponent() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const videoRef = useRef(null);
 
   const handleLogout = async () => {
     try {
       await logout();
+      navigate("/login");
     } catch (error) {
       alert("Error al cerrar sesión: ", error);
     }
@@ -20,57 +22,127 @@ export function HomeComponent() {
     navigate("/module");
   };
 
-  return (
-    <CardComponent>
-      <div className="w-full max-w-screen m-auto text-white">
-        <div className="bg-gray-800 mx-52 shadow-md rounded p-2 text-center">
-          <p className="text-2xl 2xl:text-3xl  font-mono font-semibold">
-            BIENVENIDO {user?.displayName || user?.email}
-          </p>
-          
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.addEventListener("ended", () => {
+        video.currentTime = 0;
+        video.play();
+      });
+    }
+  }, []);
 
-        </div>
-        <div className="flex justify-center">
-          <span className="text-white-700 rounded my-6 2xl:my-12 p-2 text-2xl 2xl:text-3xl  font-mono font-semibold">¡FireVault es tu opción como gestor de inventarios!</span>
-        </div>
-        <div className="flex justify-center">
-          <span className="text-white-700 rounded text-2xl 2xl:text-3xl  font-mono font-semibold">Revisa tus equipos</span>
-        </div>
-        <div className="flex justify-center gap-4">
-          <ImageCardPrincipal
-            imageSrc="/assets/equipos_automotrices.jpg"
-            title="Equipos automotrices"
-            description="En esta sección encontraras información sobre los equipos automotrices"
-            onClick={handleModule}
-          />
-          
+  const gradientKeyframes = {
+    backgroundImage: [
+      "linear-gradient(90deg, #ff5f6d 10%, #ffc371 90%)",  
+      "linear-gradient(90deg, #ffc371 10%, #ff5f6d 90%)",  
+      "linear-gradient(90deg, #ff7e5f 10%, #feb47b 90%)",  
+      "linear-gradient(90deg, #feb47b 10%, #ff7e5f 90%)",  
+      "linear-gradient(90deg, #ff6b6b 10%, #f7797d 90%)",  
+      "linear-gradient(90deg, #f7797d 10%, #ff6b6b 90%)",  
+      "linear-gradient(90deg, #ff5f6d 10%, #ffc371 90%)"   
+    ],
+  };
+  
+  return (
+    <div className="relative w-full h-full min-h-screen">
+      {/* Video Background */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        className="absolute top-0 left-0 w-full h-full object-cover"
+      >
+        <source src="assets/background.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* Overlay Content with Custom Background */}
+      <div className="absolute inset-0 z-10 flex flex-col h-full px-4 text-white bg-black bg-opacity-50">
+        {/* Header */}
+        <div className="flex justify-between items-center w-full p-4">
+          <h1 className="text-2xl font-bold">FireVault</h1>
+          <div className="bg-rose-600 p-4 rounded-lg shadow-md text-center">
+            <p className="text-2xl md:text-3xl font-mono font-semibold">
+              BIENVENIDO {user?.displayName || user?.email}
+            </p>
+          </div>
           <button
-            className="bg-slate-200 hover:bg-slate-300 rounded m-5 py-2 px-4 text-black text-base md:text-lg flex items-center justify-center space-x-2 mx-auto absolute bottom-0 right-0 p-5"
+            className="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center space-x-2"
             onClick={handleLogout}
           >
-            <div> {/* Agregamos un elemento contenedor */}
-              <svg
-                className="h-8 w-8 2xl:h-12 2xl:w-12 text-gray-900"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
-                />
-              </svg>
-              <span className="2xl:text-2xl">Salir</span>
-            </div>
-
+            <AiOutlineLogout className="h-6 w-6" />
+            <span>Salir</span>
           </button>
+        </div>
 
+        {/* Main Content */}
+        <div className="flex-grow flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="bg-neutral-900 bg-opacity-40 p-8 rounded-lg shadow-lg text-center max-w-2xl text-white"
+          >
+            <motion.h1
+              style={{
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+              className="text-5xl md:text-7xl font-bold mb-4"
+              initial={{ opacity: 0, y: -50 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                backgroundImage: gradientKeyframes.backgroundImage,
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.8,
+                backgroundImage: {
+                  duration: 5,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                },
+              }}
+            >
+              FireVault
+            </motion.h1>
+            <motion.p
+              className="text-lg md:text-xl mb-4 leading-relaxed"
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1 }}
+            >
+              FireVault es la aplicación líder en gestión de inventarios
+              diseñada para optimizar y simplificar tus operaciones
+              empresariales. Con FireVault, tendrás un control total de tu
+              inventario, asegurando precisión y eficiencia en cada paso.
+            </motion.p>
+            <div className="mb-4">
+              <motion.p
+                className="text-xl md:text-2xl font-mono font-semibold"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 1.5 }}
+              >
+                ¡FireVault es tu opción como gestor de inventarios!
+              </motion.p>
+            </div>
+            <motion.button
+              className="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-6 rounded-lg"
+              onClick={handleModule}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 2 }}
+            >
+              Revisar Equipos
+            </motion.button>
+          </motion.div>
         </div>
       </div>
-    </CardComponent>
-
+    </div>
   );
 }
 
