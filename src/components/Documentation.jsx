@@ -40,8 +40,8 @@ const Documentation = () => {
   const { user, logout } = useAuth();
 
   const suppliers = [
-    { value: "1", label: "Nombre" },
-    { value: "2", label: "Codigo" },
+    { value: "2", label: "Nombre" },
+    { value: "1", label: "Codigo" },
   ];
 
   const [searchErrorMessage, setSearchErrorMessage] = useState(null);
