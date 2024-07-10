@@ -7,12 +7,10 @@ import { getDownloadURL, ref, deleteObject, uploadBytes } from 'firebase/storage
 
 export const ButtonPdf = ({ setModal, name, folder }) => {
   console.log(name);
-  console.log("hola");
+  //console.log("hola");
 
   const downloadDocxFromFirestore = async () => {
     try {
-
-
             // 2. Una vez que obtienes el nombre del archivo desde Firestore, usa ese nombre para obtener el enlace de descarga desde Firebase Storage.
             const storageRef = ref(storage, `database/${folder}/${name}`);
             const downloadURL = await getDownloadURL(storageRef);
@@ -22,6 +20,7 @@ export const ButtonPdf = ({ setModal, name, folder }) => {
 
     } catch (error) {
         console.error("Error fetching .docx file:", error);
+        alert("Error al descargar el archivo");
     }
 }
 

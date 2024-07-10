@@ -6,10 +6,7 @@ import ButtonPdf from "./ButtonPdf";
 import Modal from "./Modal";
 import { firestore, storage } from "../firebase";
 import {
-  getDownloadURL,
-  ref,
-  deleteObject,
-  uploadBytes,
+  getDownloadURL, ref, deleteObject, uploadBytes
 } from "firebase/storage";
 import { Tooltip } from "react-tooltip";
 import { LuClipboardEdit } from "react-icons/lu";
@@ -21,16 +18,13 @@ import { Link } from "react-router-dom";
 
 import { doc, updateDoc } from "firebase/firestore";
 import Spinner from "./Spinner";
-import { AiOutlineLogout } from "react-icons/ai"; // Import the icon
-
-import { useAuth } from "../context/authContext";
+import { AiOutlineLogout } from "react-icons/ai";
 
 const Document = () => {
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { user, logout } = useAuth();
 
   const { state } = useLocation();
   const { title, name, name2, folder, code } = state;
@@ -47,8 +41,6 @@ const Document = () => {
       }
     );
   }, [folder, filename]);
-
-  //if folder is hv create a state and a useeffect
 
   const [resume2, setResume2] = useState(null);
   const [filename2, setFilename2] = useState(name2);
@@ -110,7 +102,6 @@ const Document = () => {
         console.error("Error al eliminar el archivo anterior:", error);
       }
 
-      // Ahora, intenta subir el nuevo archivo.
       try {
         await uploadBytes(storageRef, file);
         const downloadURL = await getDownloadURL(storageRef);
@@ -168,51 +159,21 @@ const Document = () => {
               onChange={(e) => handleFileChange(e, folder)}
               ref={inputRef} // Añadiré cómo definir esta referencia a continuación
             />
-            {user.role !== "user2" && (
-              <>
-                <button
-                  data-tooltip-id="botonUpload"
-                  className="text-white text-base md:text-md flex items-center justify-center absolute bottom-0 right-32 2xl:right-40 m-5"
-                  onClick={() => inputRef.current.click()}
-                >
-                  <AiOutlineUpload className="md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"></AiOutlineUpload>
-                  <Tooltip id="botonUpload" effect="float">
-                    Subir archivo
-                  </Tooltip>
-                </button>
-
-                {user.role === "admin" && folder === "hv" && (
-                  <Link
-                    to="/edit-hv"
-                    state={{
-                      title: title,
-                      folder: folder,
-                      code: String(code),
-                      name2: name2,
-                    }}
-                  >
-                    <button
-                      data-tooltip-id="botonTooltipEdithv"
-                      className="text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-48 2xl:right-60 m-5"
-                    >
-                      <MdEditDocument
-                        onClick={() => navigate("/edit-hv")}
-                        className="md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"
-                      ></MdEditDocument>
-                      <Tooltip id="botonTooltipEdithv" effect="float">
-                        Rellenar formulario - Hoja de vida
-                      </Tooltip>
-                    </button>
-                  </Link>
-                )}
-              </>
-            )}
+            <button
+              data-tooltip-id="botonUpload"
+              className="text-white text-base md:text-md flex items-center justify-center absolute bottom-0 right-32 2xl:right-40 m-5"
+              onClick={() => inputRef.current.click()}
+            >
+              <AiOutlineUpload className="md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"></AiOutlineUpload>
+              <Tooltip id="botonUpload" effect="float">
+                Subir archivo
+              </Tooltip>
+            </button>
           </>
         ) : (
           <div>
             {folder === "hv" && (
               <>
-                {/* Bloque para filename */}
                 {filename && (
                   <div className="flex justify-center x-2">
                     <ButtonPdf
@@ -226,11 +187,9 @@ const Document = () => {
                     )}
 
                     <div className="flex justify-center space-x-4">
-                      {user.role !== "user2" && (
-                        <label className="text-gray-950 md:text-md lg:text-lg flex items-center justify-center absolute bottom-40 right-96 mt-6">
-                          Hoja de vida:
-                        </label>
-                      )}
+                      <label className="text-gray-950 md:text-md lg:text-lg flex items-center justify-center absolute bottom-40 right-96 mt-6">
+                        Hoja de vida:
+                      </label>
 
                       <input
                         type="file"
@@ -239,82 +198,75 @@ const Document = () => {
                         onChange={(e) => handleFileChange(e, folder)}
                         ref={inputRef2} // Añadiré cómo definir esta referencia a continuación
                       />
-                      {user.role !== "user2" && (
-                        <>
+                      <button
+                        data-tooltip-id="botonUploadhv"
+                        className="text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-72 2xl:right-80 mb-6"
+                        onClick={() => inputRef2.current.click()}
+                      >
+                        <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
+                        <Tooltip id="botonUploadhv" effect="float">
+                          Subir archivo - Hoja de vida
+                        </Tooltip>
+                      </button>
+
+                      <Link
+                        to="/edit-hv"
+                        state={{
+                          title: title,
+                          folder: folder,
+                          code: String(code),
+                          name2: name2,
+                        }}
+                      >
+                        <button
+                          data-tooltip-id="botonFill"
+                          className="text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-56 2xl:right-64 mb-6"
+                        >
+                          <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
+
+                          <Tooltip id="botonFill" effect="float">
+                            Rellenar formulario - Hoja de vida
+                          </Tooltip>
+                        </button>
+                      </Link>
+
+                      {filename.endsWith("docx") && (
+                        <Link
+                          to="/edit-hv"
+                          state={{
+                            title: title,
+                            name: name,
+                            folder: folder,
+                            code: String(code),
+                            name2: name2,
+                          }}
+                        >
                           <button
-                            data-tooltip-id="botonUploadhv"
-                            className="text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-72 2xl:right-80 mb-6"
-                            onClick={() => inputRef2.current.click()}
+                            data-tooltip-id="botonTooltipEdithv"
+                            className="text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-40 2xl:right-48 mb-6"
                           >
-                            <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
-                            <Tooltip id="botonUploadhv" effect="float">
-                              Subir archivo - Hoja de vida
+                            <MdEditDocument className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></MdEditDocument>
+                            <Tooltip id="botonTooltipEdithv" effect="float">
+                              Editar hoja de vida
                             </Tooltip>
                           </button>
-
-                          <Link
-                            to="/edit-hv"
-                            state={{
-                              title: title,
-                              folder: folder,
-                              code: String(code),
-                              name2: name2,
-                            }}
-                          >
-                            <button
-                              data-tooltip-id="botonFill"
-                              className="text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-56 2xl:right-64 mb-6"
-                            >
-                              <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
-
-                              <Tooltip id="botonFill" effect="float">
-                                Rellenar formulario - Hoja de vida
-                              </Tooltip>
-                            </button>
-                          </Link>
-
-                          {filename.endsWith("docx") && (
-                            <Link
-                              to="/edit-hv"
-                              state={{
-                                title: title,
-                                name: name,
-                                folder: folder,
-                                code: String(code),
-                                name2: name2,
-                              }}
-                            >
-                              <button
-                                data-tooltip-id="botonTooltipEdithv"
-                                className="text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-40 2xl:right-48 mb-6"
-                              >
-                                <MdEditDocument className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></MdEditDocument>
-                                <Tooltip id="botonTooltipEdithv" effect="float">
-                                  Editar hoja de vida
-                                </Tooltip>
-                              </button>
-                            </Link>
-                          )}
-
-                          {user.role === "admin" && (
-                            <button
-                              data-tooltip-id="botonTooltipDeletehv"
-                              className="z-0 text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-24 2xl:right-32 mb-6 "
-                              onClick={() => handleDelete("hv")}
-                            >
-                              <RiDeleteBin5Fill className="z-0 md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></RiDeleteBin5Fill>
-                              <Tooltip id="botonTooltipDeletehv" effect="float">
-                                Eliminar hoja de vida
-                              </Tooltip>
-                            </button>
-                          )}
-                        </>
+                        </Link>
                       )}
+
+                      <button
+                        data-tooltip-id="botonTooltipDeletehv"
+                        className="z-0 text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-24 2xl:right-32 mb-6 "
+                        onClick={() => handleDelete("hv")}
+                      >
+                        <RiDeleteBin5Fill className="z-0 md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></RiDeleteBin5Fill>
+                        <Tooltip id="botonTooltipDeletehv" effect="float">
+                          Eliminar hoja de vida
+                        </Tooltip>
+                      </button>
                     </div>
                   </div>
                 )}
 
-                {/* Bloque para filename2 */}
                 {filename2 && (
                   <div className="flex justify-center space-x-4">
                     <ButtonPdf
@@ -325,11 +277,9 @@ const Document = () => {
                     />
                     {modal2 && <Modal setModal={setModal2} resume={resume2} />}
 
-                    {user.role !== "user2" && (
-                      <label className="text-gray-950 md:text-md lg:text-lg flex items-center justify-center absolute bottom-24 right-96 mt-6">
-                        Reporte de servicio:
-                      </label>
-                    )}
+                    <label className="text-gray-950 md:text-md lg:text-lg flex items-center justify-center absolute bottom-24 right-96 mt-6">
+                      Reporte de servicio:
+                    </label>
 
                     <input
                       type="file"
@@ -339,130 +289,116 @@ const Document = () => {
                       ref={inputRef} // Añadiré cómo definir esta referencia a continuación
                     />
 
-                    {user.role !== "user2" && (
-                      <>
+                    <button
+                      data-tooltip-id="botonUpload"
+                      className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-72 2xl:right-80 mt-6"
+                      onClick={() => inputRef.current.click()}
+                    >
+                      <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
+                      <Tooltip id="botonUpload" effect="float">
+                        Subir archivo - Reporte de servicio
+                      </Tooltip>
+                    </button>
+
+                    <Link
+                      to="/edit-rs"
+                      state={{
+                        title: title,
+                        name: name,
+                        folder: folder,
+                        code: String(code),
+                      }}
+                    >
+                      <button
+                        data-tooltip-id="botonFillrs"
+                        className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-56 2xl:right-64 mt-6"
+                      >
+                        <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
+                        <Tooltip id="botonFillrs" effect="float">
+                          Rellenar formulario - Reporte de servicio
+                        </Tooltip>
+                      </button>
+                    </Link>
+
+                    {filename2.endsWith("docx") && (
+                      <Link
+                        to="/edit-rs"
+                        state={{
+                          title: title,
+                          name: name,
+                          folder: folder,
+                          code: String(code),
+                          name2: name2,
+                        }}
+                      >
                         <button
-                          data-tooltip-id="botonUpload"
-                          className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-72 2xl:right-80 mt-6"
-                          onClick={() => inputRef.current.click()}
+                          data-tooltip-id="botonTooltipEditrs"
+                          className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-40 2xl:right-48 mt-6"
                         >
-                          <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
-                          <Tooltip id="botonUpload" effect="float">
-                            Subir archivo - Reporte de servicio
+                          <LuClipboardEdit className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></LuClipboardEdit>
+                          <Tooltip id="botonTooltipEditrs" effect="float">
+                            Editar reporte de servicio
                           </Tooltip>
                         </button>
-
-                        <Link
-                          to="/edit-rs"
-                          state={{
-                            title: title,
-                            name: name,
-                            folder: folder,
-                            code: String(code),
-                          }}
-                        >
-                          <button
-                            data-tooltip-id="botonFillrs"
-                            className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-56 2xl:right-64 mt-6"
-                          >
-                            <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
-                            <Tooltip id="botonFillrs" effect="float">
-                              Rellenar formulario - Reporte de servicio
-                            </Tooltip>
-                          </button>
-                        </Link>
-
-                        {filename2.endsWith("docx") && (
-                          <Link
-                            to="/edit-rs"
-                            state={{
-                              title: title,
-                              name: name,
-                              folder: folder,
-                              code: String(code),
-                              name2: name2,
-                            }}
-                          >
-                            <button
-                              data-tooltip-id="botonTooltipEditrs"
-                              className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-40 2xl:right-48 mt-6"
-                            >
-                              <LuClipboardEdit className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></LuClipboardEdit>
-                              <Tooltip id="botonTooltipEditrs" effect="float">
-                                Editar reporte de servicio
-                              </Tooltip>
-                            </button>
-                          </Link>
-                        )}
-
-                        {user.role === "admin" && (
-                          <button
-                            data-tooltip-id="botonTooltipDeleters"
-                            className="z-0 text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-24 2xl:right-32 mt-6 "
-                            onClick={() => handleDelete("rps")}
-                          >
-                            <RiDeleteBin5Fill className="z-0 md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></RiDeleteBin5Fill>
-                            <Tooltip id="botonTooltipDeleters" effect="float">
-                              Eliminar reporte de servicio
-                            </Tooltip>
-                          </button>
-                        )}
-                      </>
+                      </Link>
                     )}
+
+                    <button
+                      data-tooltip-id="botonTooltipDeleters"
+                      className="z-0 text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-24 2xl:right-32 mt-6 "
+                      onClick={() => handleDelete("rps")}
+                    >
+                      <RiDeleteBin5Fill className="z-0 md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></RiDeleteBin5Fill>
+                      <Tooltip id="botonTooltipDeleters" effect="float">
+                        Eliminar reporte de servicio
+                      </Tooltip>
+                    </button>
                   </div>
                 )}
 
-                {/* Si filename2 no existe... */}
                 {!filename2 && (
                   <>
-                    {user.role !== "user2" && (
-                      <label className="text-gray-950 md:text-md lg:text-lg flex items-center justify-center absolute bottom-24 right-96 mt-6">
-                        Reporte de servicio:
-                      </label>
-                    )}
+                    <label className="text-gray-950 md:text-md lg:text-lg flex items-center justify-center absolute bottom-24 right-96 mt-6">
+                      Reporte de servicio:
+                    </label>
 
                     <input
                       type="file"
                       style={{ display: "none" }}
-                      accept=".pdf" // Para solo permitir archivos PDF
+                      accept=".pdf"
                       onChange={(e) => handleFileChange(e, "rps")}
-                      ref={inputRef} // Añadiré cómo definir esta referencia a continuación
+                      ref={inputRef}
                     />
 
-                    {user.role !== "user2" && (
-                      <>
-                        <button
-                          data-tooltip-id="botonUpload"
-                          className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-40 2xl:right-48 mt-6"
-                          onClick={() => inputRef.current.click()}
-                        >
-                          <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
-                          <Tooltip id="botonUpload" effect="float">
-                            Subir archivo - Reporte de servicio
-                          </Tooltip>
-                        </button>
-                        <Link
-                          to="/edit-rs"
-                          state={{
-                            title: title,
-                            name: name,
-                            folder: folder,
-                            code: String(code),
-                          }}
-                        >
-                          <button
-                            data-tooltip-id="botonFillrs"
-                            className="z-0 text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-24 2xl:right-32 mt-6 "
-                          >
-                            <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
-
-                            <Tooltip id="botonFillrs" effect="float">
-                              Rellenar formulario - Reporte de servicio
-                            </Tooltip>
-                          </button>
-                        </Link>
-                      </>
-                    )}
+                    <button
+                      data-tooltip-id="botonUpload"
+                      className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-40 2xl:right-48 mt-6"
+                      onClick={() => inputRef.current.click()}
+                    >
+                      <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
+                      <Tooltip id="botonUpload" effect="float">
+                        Subir archivo - Reporte de servicio
+                      </Tooltip>
+                    </button>
+                    <Link
+                      to="/edit-rs"
+                      state={{
+                        title: title,
+                        name: name,
+                        folder: folder,
+                        code: String(code),
+                      }}
+                    >
+                      <button
+                        data-tooltip-id="botonFillrs"
+                        className="z-0 text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-24 2xl:right-32 mt-6 "
+                      >
+                        <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
+                        <Tooltip id="botonFillrs" effect="float">
+                          Rellenar formulario - Reporte de servicio
+                        </Tooltip>
+                      </button>
+                    </Link>
                   </>
                 )}
               </>
@@ -478,35 +414,31 @@ const Document = () => {
                   <input
                     type="file"
                     style={{ display: "none" }}
-                    accept=".pdf" // Para solo permitir archivos PDF
+                    accept=".pdf"
                     onChange={(e) => handleFileChange(e, folder)}
-                    ref={inputRef} // Añadiré cómo definir esta referencia a continuación
+                    ref={inputRef}
                   />
 
-                  {user.role !== "user2" && (
-                    <button
-                      data-tooltip-id="botonUpload"
-                      className="text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-48 2xl:right-56 m-5"
-                      onClick={() => inputRef.current.click()}
-                    >
-                      <AiOutlineUpload className="md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"></AiOutlineUpload>
-                      <Tooltip id="botonUpload" effect="float">
-                        Subir archivo
-                      </Tooltip>
-                    </button>
-                  )}
-                  {user.role === "admin" && (
-                    <button
-                      data-tooltip-id="botonTooltipDelete"
-                      className="z-0 text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-32  2xl:right-36 m-5"
-                      onClick={() => handleDelete(folder)}
-                    >
-                      <RiDeleteBin5Fill className="z-0 md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"></RiDeleteBin5Fill>
-                      <Tooltip id="botonTooltipDelete" effect="float">
-                        Eliminar documento
-                      </Tooltip>
-                    </button>
-                  )}
+                  <button
+                    data-tooltip-id="botonUpload"
+                    className="text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-48 2xl:right-56 m-5"
+                    onClick={() => inputRef.current.click()}
+                  >
+                    <AiOutlineUpload className="md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"></AiOutlineUpload>
+                    <Tooltip id="botonUpload" effect="float">
+                      Subir archivo
+                    </Tooltip>
+                  </button>
+                  <button
+                    data-tooltip-id="botonTooltipDelete"
+                    className="z-0 text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-32 2xl:right-36 m-5"
+                    onClick={() => handleDelete(folder)}
+                  >
+                    <RiDeleteBin5Fill className="z-0 md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"></RiDeleteBin5Fill>
+                    <Tooltip id="botonTooltipDelete" effect="float">
+                      Eliminar documento
+                    </Tooltip>
+                  </button>
                 </>
               </>
             )}

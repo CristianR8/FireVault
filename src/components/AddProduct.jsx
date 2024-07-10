@@ -106,7 +106,7 @@ const AddProduct = () => {
     setData({})
     setHv({})
     setRps({})
-    navigate("/documentation");
+    navigate("/module");
   };
 
   const handlehv = () => {

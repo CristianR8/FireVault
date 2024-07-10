@@ -13,6 +13,10 @@ export function ModuleSelection() {
     navigate("/");
   };
 
+  const handleAddProduct = async () => {
+    navigate("/add-product");
+  }
+
   const handleMaintenance = async () => {
     navigate("/maintenance");
   };
@@ -76,6 +80,13 @@ export function ModuleSelection() {
             transition={{ delay: 1, duration: 0.5 }}
           >
             <ImageCard
+              imageSrc="/assets/equipos_automotrices.jpg"
+              title="Agregar productos"
+              description="En este módulo podrás agregar los equipos automotrices."
+              onClick={handleAddProduct}
+            />
+
+            <ImageCard
               imageSrc="/assets/doc.jpg"
               title="Documentación"
               description="En este módulo encontrarás información sobre la documentación de los equipos automotrices."
@@ -87,6 +98,7 @@ export function ModuleSelection() {
               description="En este módulo podrás ver el cronograma de mantenimiento para los equipos automotrices."
               onClick={handleMaintenance}
             />
+
           </motion.div>
         </div>
       </div>
