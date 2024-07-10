@@ -7,10 +7,10 @@ import Input from "./Input";
 import InputFile from "./InputFIle";
 import InputFileTwo from "./InputFileTwo";
 import { Link } from 'react-router-dom';
+
 import Spinner from "./Spinner"
-
+import { AiOutlineLogout } from "react-icons/ai"; // Import the icon
 import { useNavigate } from "react-router-dom";
-
 import { firestore, storage } from "../firebase";
 import { ref, uploadBytes } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
@@ -126,20 +126,27 @@ const AddProduct = () => {
   return (
     loading ? <Spinner/> : (
     <CardComponent>
-      <div>
-        <div className="bg-gray-400 shadow-md rounded-lg px-8 p-4 mx-52 text-center">
-          <p className="text-3xl font-mono font-semibold ">
-            {" "}
-            Agregar productos{" "}
+      <div className="flex justify-between items-center w-full p-4">
+        <h1 className="text-2xl text-white font-bold">FireVault</h1>
+        <div className="bg-rose-600 text-white shadow-md rounded-lg px-24 py-4 mx-52 text-center">
+          <p className="sm:text-xl lg:text-2xl 2xl:text-4xl font-mono font-semibold ">
+            Agregar productos
           </p>
         </div>
+        <button
+          className="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center space-x-2"
+          onClick={handleReturn}
+        >
+          <AiOutlineLogout className="h-6 w-6" />
+          <span>Volver</span>
+        </button>
       </div>
 
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-1 sm:grid-cols-1 gap-4 bg-gray-950 bg-opacity-100 2xl:flex-row items-center justify-center rounded-lg shadow-lg py-2 px-8 mx-2 w-3/4 2xl:w-1/2 text-cente "
-        >
+          className="grid grid-cols-1 sm:grid-cols-1 gap-4 bg-neutral-900 bg-opacity-100 2xl:flex-row items-center justify-center rounded-lg shadow-lg py-2 px-8 mx-2 w-3/4 2xl:w-1/2 text-center"
+          >
           <div className="flex flex-row text-gray-400 w-full">
             <div className="flex flex-col mr-3 flex-grow">
               <label className="block text-xl font-mono text-white font-semibold mt-4 mr-10 ">
@@ -188,7 +195,7 @@ const AddProduct = () => {
           <div className="flex flex-row text-gray-400 w-full">
             <div className="flex flex-col mr-3 flex-grow">
 
-              <label className="block text-gray-800 text-xl font-mon font-semibold mt-2 mr-10">
+              <label className="block text-white text-xl font-mon font-semibold mt-2 mr-10">
                 Lote
               </label>
               <Input
@@ -292,7 +299,7 @@ const AddProduct = () => {
 
           <div className="flex w-full text-gray-400 py-2">
             <button 
-            className="w-full text-xl my-5 py-2 bg-gray-400 hover:shadow-lg hover:shadow-gray-500/40 duration-150 text-gray-800 font-bold rounded-lg"
+            className="w-full text-xl my-5 py-2 bg-rose-600 hover:shadow-lg hover:shadow-rose-500/80 duration-150 text-white font-bold rounded-lg"
 
             >
               
@@ -304,7 +311,6 @@ const AddProduct = () => {
         </form>
       </div>
 
-      <Return onClick={handleReturn} />
     </CardComponent>
     )
   );

@@ -5,17 +5,18 @@ import Select from "react-select";
 import CustomSelectField from "./CustomSelectField";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { firestore,storage } from "../firebase";
-import Spinner from "./Spinner"
+import { firestore, storage } from "../firebase";
+import Spinner from "./Spinner";
+import { AiOutlineLogout } from "react-icons/ai"; // Import the icon
+
 
 import { doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
 import { DocGenerator } from "../services/DocGenerator";
-import useAddProductStore from '../store/addproductStore'
+import useAddProductStore from "../store/addproductStore";
 
 import { useLocation } from "react-router-dom";
 import { modelRS } from "../models/modelRS";
-import { ref, deleteObject} from 'firebase/storage'
-
+import { ref, deleteObject } from "firebase/storage";
 
 import Input from "./Input";
 const EditRS = () => {
@@ -24,10 +25,10 @@ const EditRS = () => {
     setError,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
 
-  const { rps, setRps } = useAddProductStore()
+  const { rps, setRps } = useAddProductStore();
 
   const { state } = useLocation();
 
@@ -42,20 +43,19 @@ const EditRS = () => {
   const retrieveDataEdit = async () => {
     if (name2 !== undefined) {
       let id = name2.split(".")[0];
-      console.log(id)
+      console.log(id);
       //retrieve from firestore
       const docRef = doc(firestore, "rps", id);
-      const docSnap = await getDoc(docRef); 
-      
+      const docSnap = await getDoc(docRef);
+
       if (docSnap.exists()) {
         setDataEdit(docSnap.data());
-        reset(docSnap.data())
+        reset(docSnap.data());
       } else {
         console.log("No such document!");
       }
-
     }
-  }; 
+  };
 
   useEffect(() => {
     retrieveDataEdit();
@@ -82,13 +82,14 @@ const EditRS = () => {
     setDataObj({ ...dataObj, imagenesEquipo: imageUrls });
   };
 
-
   function getBase64(file, onLoadCallback) {
-    return new Promise(function(resolve, reject) {
-        var reader = new FileReader();
-        reader.onload = function() { resolve(reader.result); };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
     });
   }
 
@@ -139,20 +140,28 @@ const EditRS = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    let dataObj = modelRS(data,selectedOptions,camposAdicionales,camposAdicionalesR ) 
+    let dataObj = modelRS(
+      data,
+      selectedOptions,
+      camposAdicionales,
+      camposAdicionalesR
+    );
 
     //remove undefined fields
     Object.keys(dataObj).forEach(
       (key) => dataObj[key] === undefined && delete dataObj[key]
     );
 
-    dataObj["FirmaEntrego"] = await getBase64(data.FirmaEntrego[0])
-    dataObj["FirmaRecibio"] = await getBase64(data.FirmaRecibio[0])
-    dataObj["FirmaResponsable"] = await getBase64(data.FirmaResponsable[0])
+    dataObj["FirmaEntrego"] = await getBase64(data.FirmaEntrego[0]);
+    dataObj["FirmaRecibio"] = await getBase64(data.FirmaRecibio[0]);
+    dataObj["FirmaResponsable"] = await getBase64(data.FirmaResponsable[0]);
 
-    console.log("inv")
-    
-    await setDoc(doc(firestore, "rps", String(dataObj.numeroInventario) ), dataObj);
+    console.log("inv");
+
+    await setDoc(
+      doc(firestore, "rps", String(dataObj.numeroInventario)),
+      dataObj
+    );
 
     if (code !== undefined) {
       if (name2 !== undefined) {
@@ -160,12 +169,31 @@ const EditRS = () => {
         await deleteObject(storageRef);
       }
 
-      let images = {FirmaEntrego: dataObj.FirmaEntrego, FirmaRecibio: dataObj.FirmaRecibio, FirmaResponsable: dataObj.FirmaResponsable}
-      await DocGenerator("formularioEditRS", {...dataObj, ...images}, String(dataObj.numeroInventario) + ".docx", 'rps');
-      await updateDoc(doc(firestore, "productos", String(code)), {rps: String(dataObj.numeroInventario) + ".docx" });
-      navigate("/documentation/reporte-de-servicio", { state: { title: title, name: String(dataObj.inventario) + ".docx", folder: folder, code: String(code), name2: name2 } })
+      let images = {
+        FirmaEntrego: dataObj.FirmaEntrego,
+        FirmaRecibio: dataObj.FirmaRecibio,
+        FirmaResponsable: dataObj.FirmaResponsable,
+      };
+      await DocGenerator(
+        "formularioEditRS",
+        { ...dataObj, ...images },
+        String(dataObj.numeroInventario) + ".docx",
+        "rps"
+      );
+      await updateDoc(doc(firestore, "productos", String(code)), {
+        rps: String(dataObj.numeroInventario) + ".docx",
+      });
+      navigate("/documentation/reporte-de-servicio", {
+        state: {
+          title: title,
+          name: String(dataObj.inventario) + ".docx",
+          folder: folder,
+          code: String(code),
+          name2: name2,
+        },
+      });
     } else {
-      setRps(dataObj)
+      setRps(dataObj);
       navigate("/add-product");
     }
 
@@ -173,22 +201,35 @@ const EditRS = () => {
     setLoading(false);
   };
 
-  return (
-    loading ? <Spinner/> :(
+  const handleReturn = async () => {
+    navigate("/add-product");
+  };
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <CardComponent>
-      <div className="bg-gray-400 shadow-md rounded-lg px-8 p-4 mx-52 text-center">
-        <p className="text-3xl font-mono font-semibold">
-          Edición - Reporte de servicio
-        </p>
+      <div className="flex justify-between items-center w-full p-4">
+        <h1 className="text-2xl text-white font-bold">FireVault</h1>
+        <div className="bg-rose-600 text-white shadow-md rounded-lg px-24 py-4 mx-52 text-center">
+          <p className="sm:text-md lg:text-xl 2xl:text-3xl font-mono font-semibold ">
+            Edicion - Reporte de Servicio
+          </p>
+        </div>
+        <button
+          className="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center space-x-2"
+          onClick={handleReturn}
+        >
+          <AiOutlineLogout className="h-6 w-6" />
+          <span>Volver</span>
+        </button>
       </div>
 
       <div className="flex justify-center mt-4 text-center">
-
         <form
-          className="bg-gray-900 bg-opacity-100 rounded-lg shadow-lg p-8 mx-2 w-full"
+          className="bg-neutral-800 bg-opacity-100 rounded-lg shadow-lg p-8 mx-2 w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
-          
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-10">
             <Input
               label="Versión"
@@ -370,14 +411,16 @@ const EditRS = () => {
 
             <div className={`col-span-3`}>
               <label className="block text-xl font-mono text-white font-semibold">
-              ¿Se ejecutó el proceso de descontaminación?
+                ¿Se ejecutó el proceso de descontaminación?
               </label>
               <select
                 label="descontaminacion"
                 placeholder="Seleccione un tipo"
                 nameRegister="descontaminacion"
                 className="bg-white border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
-                onChange={(e) => handleSelectChange("descontaminacion", e.target.value)}
+                onChange={(e) =>
+                  handleSelectChange("descontaminacion", e.target.value)
+                }
                 value={selectedOptions.descontaminacion}
               >
                 <option value=""></option>
@@ -385,8 +428,6 @@ const EditRS = () => {
                 <option value="No">No</option>
               </select>
             </div>
-
-
 
             <div className="col-span-3">
               <p className="block text-2xl border-dashed border-2 border-gray-200 rounded-lg font-mono font-semibold text-white mt-6 p-2 text-center">
@@ -761,16 +802,14 @@ const EditRS = () => {
 
             <div className={`col-span-1`}>
               <label className="block text-xl font-mono text-white font-semibold mt-2">
-                Mantenimiento 
+                Mantenimiento
               </label>
               <select
                 label="Problemas reportados"
                 placeholder="Seleccione un tipo"
                 nameRegister="mS"
                 className="bg-white border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
-                onChange={(e) =>
-                  handleSelectChange("mS", e.target.value)
-                }
+                onChange={(e) => handleSelectChange("mS", e.target.value)}
                 value={selectedOptions.mS}
               >
                 <option value=""></option>
@@ -853,9 +892,7 @@ const EditRS = () => {
               placeholder="Seleccione un tipo"
               nameRegister="pR"
               className="bg-white border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
-              onChange={(e) =>
-                handleSelectChange("pR", e.target.value)
-              }
+              onChange={(e) => handleSelectChange("pR", e.target.value)}
               value={selectedOptions.pR}
             >
               <option value=""></option>
@@ -885,9 +922,7 @@ const EditRS = () => {
               placeholder="Seleccione un tipo"
               nameRegister="eFQ"
               className="bg-white border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
-              onChange={(e) =>
-                handleSelectChange("eFQ", e.target.value)
-              }
+              onChange={(e) => handleSelectChange("eFQ", e.target.value)}
               value={selectedOptions.eFQ}
             >
               <option value=""></option>
@@ -1023,21 +1058,17 @@ const EditRS = () => {
           </div>
 
           <div className="col-span-3">
-
-
             <label className="block text-xl font-mono text-white font-semibold">
               Firma
             </label>
-              <input
-                className="bg-white border border-gray-400 rounded-lg px-4 w-full text-gray-600"
-                type="file"
-                nameRegister="FirmaResponsable"
-                accept="image/*"
-                {...register("FirmaResponsable")}
-              />
-            </div>
-
-
+            <input
+              className="bg-white border border-gray-400 rounded-lg px-4 w-full text-gray-600"
+              type="file"
+              nameRegister="FirmaResponsable"
+              accept="image/*"
+              {...register("FirmaResponsable")}
+            />
+          </div>
 
           <div className="mt-8" />
 
@@ -1048,12 +1079,9 @@ const EditRS = () => {
           </div>
 
           <div className="mb-4" />
-
         </form>
       </div>
-      <Return onClick={() => navigate(-1)} />
     </CardComponent>
-    )
   );
 };
 
