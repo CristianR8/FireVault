@@ -3,6 +3,8 @@ import CardComponent from "./CardComponent";
 import Return from "./Return";
 import CustomSelectField from "./CustomSelectField";
 import { set, useForm } from "react-hook-form";
+import { AiOutlineLogout } from "react-icons/ai"; // Import the icon
+
 
 import Spinner from "./Spinner"
 import SelectInput from "./SelectInput";
@@ -172,15 +174,25 @@ const EditHV = () => {
   return (
     loading ? <Spinner /> : (
       <CardComponent>
-        <div className="bg-gray-400 shadow-md rounded-lg px-8 p-4 mx-52 text-center">
-          <p className="text-3xl font-mono font-semibold">
-            Edición - Hoja de vida
+        <div className="flex justify-between items-center w-full p-4">
+        <h1 className="text-2xl text-white font-bold">FireVault</h1>
+        <div className="bg-rose-600 text-white shadow-md rounded-lg px-24 py-4 mx-52 text-center">
+          <p className="sm:text-md lg:text-xl 2xl:text-3xl font-mono font-semibold ">
+            Edicion - Hoja de Vida
           </p>
         </div>
+        <button
+          className="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center space-x-2"
+          onClick={handleReturn}
+        >
+          <AiOutlineLogout className="h-6 w-6" />
+          <span>Volver</span>
+        </button>
+      </div>
 
         <div className="flex justify-center mt-4 text-center">
           <form
-            className="bg-gray-900 bg-opacity-100 rounded-lg shadow-lg p-8 mx-2 w-full"
+            className="bg-neutral-800 bg-opacity-100 rounded-lg shadow-lg p-8 mx-2 w-full"
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
@@ -1142,7 +1154,6 @@ const EditHV = () => {
             </div>
           </form>
         </div>
-        <Return onClick={() => navigate(-1)} />
       </CardComponent>
     )
   );

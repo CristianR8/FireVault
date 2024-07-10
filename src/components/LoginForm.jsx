@@ -79,7 +79,7 @@ export default function LoginForm() {
               type="text"
             />
           </div>
-          <div className="flex flex-col text-neutral-800 relative py-2">
+          <div className="flex flex-col text-neutral-700 relative py-2">
             <label>Contraseña</label>
             <Input
               errors={errors}
