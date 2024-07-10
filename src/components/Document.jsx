@@ -187,7 +187,7 @@ const Document = () => {
                     )}
 
                     <div className="flex justify-center space-x-4">
-                      <label className="text-gray-950 md:text-md lg:text-lg flex items-center justify-center absolute bottom-40 right-96 mt-6">
+                      <label className="text-white md:text-md lg:text-lg flex items-center justify-center absolute bottom-40 right-96 mt-6">
                         Hoja de vida:
                       </label>
 
@@ -220,7 +220,7 @@ const Document = () => {
                       >
                         <button
                           data-tooltip-id="botonFill"
-                          className="text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-56 2xl:right-64 mb-6"
+                          className="text-white text-base md:text-md flex items-center justify-center absolute bottom-32 right-56 2xl:right-64 mb-6"
                         >
                           <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
 
@@ -277,7 +277,7 @@ const Document = () => {
                     />
                     {modal2 && <Modal setModal={setModal2} resume={resume2} />}
 
-                    <label className="text-gray-950 md:text-md lg:text-lg flex items-center justify-center absolute bottom-24 right-96 mt-6">
+                    <label className="text-white md:text-md lg:text-lg flex items-center justify-center absolute bottom-24 right-96 mt-6">
                       Reporte de servicio:
                     </label>
 
@@ -311,7 +311,7 @@ const Document = () => {
                     >
                       <button
                         data-tooltip-id="botonFillrs"
-                        className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-56 2xl:right-64 mt-6"
+                        className="text-white text-base md:text-md flex items-center justify-center absolute bottom-20 right-56 2xl:right-64 mt-6"
                       >
                         <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
                         <Tooltip id="botonFillrs" effect="float">
@@ -391,7 +391,7 @@ const Document = () => {
                     >
                       <button
                         data-tooltip-id="botonFillrs"
-                        className="z-0 text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-24 2xl:right-32 mt-6 "
+                        className="z-0 text-white text-base md:text-md flex items-center justify-center absolute bottom-20 right-24 2xl:right-32 mt-6 "
                       >
                         <FaFileWaveform className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></FaFileWaveform>
                         <Tooltip id="botonFillrs" effect="float">
