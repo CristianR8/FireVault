@@ -188,7 +188,7 @@ const AddProduct = () => {
           <div className="flex flex-row text-gray-400 w-full">
             <div className="flex flex-col mr-3 flex-grow">
 
-              <label className="block text-gray-800 text-xl font-mono text-white font-semibold mt-2 mr-10">
+              <label className="block text-gray-800 text-xl font-mon font-semibold mt-2 mr-10">
                 Lote
               </label>
               <Input
