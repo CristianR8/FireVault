@@ -22,7 +22,7 @@ export default function RegisterForm() {
   const onSubmitFunction = async (data) => {
     try {
       await signup(data.email, data.password);
-      navigate("/");
+      navigate("/auth");
     } catch (error) {
       setError(error.message);
       if (error.code === "auth/email-already-in-use") {

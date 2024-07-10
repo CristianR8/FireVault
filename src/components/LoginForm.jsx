@@ -88,13 +88,13 @@ export default function LoginForm() {
               nameRegister="password"
               placeholder="***********"
               className="w-full rounded-lg bg-rose-50 mt-2 p-2 focus:border-rose-800 focus:bg-rose-100  focus:outline-none"
-              typeInput={visible === false ? "password" : "text"}
+              typeInput={visible ? "text" : "password"}
             />
              <div className="text-2xl absolute my-11 right-2 text-gray-400">
-              {visible === false ? (
-                <AiOutlineEye onClick={toggle} />
-              ) : (
+              {visible ? (
                 <AiOutlineEyeInvisible onClick={toggle} />
+              ) : (
+                <AiOutlineEye onClick={toggle} />
               )}
             </div>
           </div>
@@ -116,6 +116,9 @@ export default function LoginForm() {
           <button className="w-full my-5 py-2 bg-neutral-800 shadow-lg duration-200 shadow-teal hover:shadow-neutral-800/90 text-gray-50 font-bold rounded-lg">
             INGRESAR
           </button>
+          <Link to="/register" className="w-full text-center mt-4 py-2 text-gray-50 underline">
+            ¿No tienes cuenta? Regístrate
+          </Link>
         </form>
       </div>
     </div>
