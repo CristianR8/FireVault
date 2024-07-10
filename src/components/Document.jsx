@@ -200,7 +200,7 @@ const Document = () => {
                       />
                       <button
                         data-tooltip-id="botonUploadhv"
-                        className="text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-72 2xl:right-80 mb-6"
+                        className="text-white text-base md:text-md flex items-center justify-center absolute bottom-32 right-72 2xl:right-80 mb-6"
                         onClick={() => inputRef2.current.click()}
                       >
                         <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
@@ -255,7 +255,7 @@ const Document = () => {
 
                       <button
                         data-tooltip-id="botonTooltipDeletehv"
-                        className="z-0 text-gray-950 text-base md:text-md flex items-center justify-center absolute bottom-32 right-24 2xl:right-32 mb-6 "
+                        className="z-0 text-white text-base md:text-md flex items-center justify-center absolute bottom-32 right-24 2xl:right-32 mb-6 "
                         onClick={() => handleDelete("hv")}
                       >
                         <RiDeleteBin5Fill className="z-0 md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></RiDeleteBin5Fill>
@@ -291,7 +291,7 @@ const Document = () => {
 
                     <button
                       data-tooltip-id="botonUpload"
-                      className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-72 2xl:right-80 mt-6"
+                      className="text-white text-base md:text-md flex items-center justify-center absolute bottom-20 right-72 2xl:right-80 mt-6"
                       onClick={() => inputRef.current.click()}
                     >
                       <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
@@ -345,7 +345,7 @@ const Document = () => {
 
                     <button
                       data-tooltip-id="botonTooltipDeleters"
-                      className="z-0 text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-24 2xl:right-32 mt-6 "
+                      className="z-0 text-white text-base md:text-md flex items-center justify-center absolute bottom-20 right-24 2xl:right-32 mt-6 "
                       onClick={() => handleDelete("rps")}
                     >
                       <RiDeleteBin5Fill className="z-0 md:h-6 md:w-6 lg:h-10 lg:w-10  2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></RiDeleteBin5Fill>
@@ -372,7 +372,7 @@ const Document = () => {
 
                     <button
                       data-tooltip-id="botonUpload"
-                      className="text-gray-800 text-base md:text-md flex items-center justify-center absolute bottom-20 right-40 2xl:right-48 mt-6"
+                      className="text-white text-base md:text-md flex items-center justify-center absolute bottom-20 right-40 2xl:right-48 mt-6"
                       onClick={() => inputRef.current.click()}
                     >
                       <AiOutlineUpload className="md:h-6 md:w-6 lg:h-10 lg:w-10 2xl:h-14 2xl:w-14 hover:scale-110 duration-200"></AiOutlineUpload>
@@ -421,7 +421,7 @@ const Document = () => {
 
                   <button
                     data-tooltip-id="botonUpload"
-                    className="text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-48 2xl:right-56 m-5"
+                    className="text-white text-base md:text-md flex items-center justify-center absolute bottom-0 right-48 2xl:right-56 m-5"
                     onClick={() => inputRef.current.click()}
                   >
                     <AiOutlineUpload className="md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"></AiOutlineUpload>
@@ -431,7 +431,7 @@ const Document = () => {
                   </button>
                   <button
                     data-tooltip-id="botonTooltipDelete"
-                    className="z-0 text-gray-900 text-base md:text-md flex items-center justify-center absolute bottom-0 right-32 2xl:right-36 m-5"
+                    className="z-0 text-white text-base md:text-md flex items-center justify-center absolute bottom-0 right-32 2xl:right-36 m-5"
                     onClick={() => handleDelete(folder)}
                   >
                     <RiDeleteBin5Fill className="z-0 md:h-14 md:w-14 2xl:h-16 2xl:w-16 hover:scale-110 duration-200"></RiDeleteBin5Fill>
