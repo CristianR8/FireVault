@@ -49,11 +49,11 @@ const MntFormProduct = ({ onSubmitFn }) => {
       className="max-w-[400px]-w-full h-full py-16 bg-gray-50 px-8 rounded-lg m-4"
     >
       <div>
-        <label className="block text-gray-900 font-semibold mb-2 text-lg">
+        <label className="block text-neutral-900 font-semibold mb-2 text-lg">
           Digite el código del activo:
         </label>
         <div className="flex items-center mb-12">
-          <BsSearch className="w-7 h-8 mr-3 sm:mb-5 text-gray-900" />
+          <BsSearch className="w-7 h-8 mr-3 sm:mb-5 text-neutral-900" />
           <Input
             errors={errors}
             validation={ValidationMaintenance}
@@ -64,7 +64,7 @@ const MntFormProduct = ({ onSubmitFn }) => {
             typeInput="text"
           />
         </div>
-        <label className="block text-gray-800 font-semibold mb-2 text-lg">
+        <label className="block text-neutral-900 font-semibold mb-2 text-lg">
           Seleccione el mes de mantenimiento del activo:
         </label>
 

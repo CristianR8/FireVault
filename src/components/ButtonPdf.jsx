@@ -38,7 +38,7 @@ export const ButtonPdf = ({ setModal, name, folder }) => {
             }
         }}
 
-          className="px-72 py-2.5 pl-32 group w-screen overflow-hidden font-semibold bg-gray-900 text-white relative mb-16"
+          className="px-72 py-2.5 pl-32 group w-screen overflow-hidden font-semibold bg-rose-500 text-white relative mb-16"
         >
           <span className="absolute w-full top-0 left-0 flex h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-gray-50 group-hover:h-full">
             {" "}

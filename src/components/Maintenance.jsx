@@ -147,12 +147,12 @@ const Maintenance = () => {
               <label className="block bg-neutral-900 text-white shadow-md rounded-full p-3 mb-5 text-center text-lg font-mono font-semibold">
                 Próximos mantenimientos
               </label>
-              <label className="flex items-center justify-center text-gray-800 font-semibold my-8 text-lg ">
+              <label className="flex items-center justify-center text-neutral-900 font-semibold my-8 text-lg ">
                 Mes:
                 <select
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
-                  className="bg-white border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mx-4"
+                  className="bg-white border border-gray-300 text-neutral-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mx-4"
                 >
                   <option>Todos</option>
                   <option>Enero</option>
