@@ -3,6 +3,7 @@ import CardComponent from "./CardComponent";
 import SearchResults from "./SearchResults";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineLogout } from "react-icons/ai"; // Import the icon
 import { Tooltip } from "react-tooltip";
 import Swal from 'sweetalert2'
 
@@ -151,13 +152,20 @@ const Documentation = () => {
 
   return (
     <CardComponent>
-      <div>
-        <div className="bg-gray-800 text-white shadow-md rounded-lg px-8 p-4 mx-52 text-center">
-          <p className="text-3xl font-mono 2xl:text-4xl font-semibold ">
-            {" "}
-            BIENVENIDO AL MÓDULO DE DOCUMENTACIÓN{" "}
+      <div className="flex justify-between items-center w-full p-4">
+        <h1 className="text-2xl text-white font-bold">FireVault</h1>
+        <div className="bg-rose-600 p-4 rounded-lg shadow-md text-center">
+          <p className="text-3xl text-white 2xl:text-4xl font-mono font-semibold">
+            BIENVENIDO AL MODULO DE DOCUMENTACIÓN
           </p>
         </div>
+        <button
+          className="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center space-x-2"
+          onClick={handleReturn}
+        >
+          <AiOutlineLogout className="h-6 w-6" />
+          <span>Volver</span>
+        </button>
       </div>
       <div className="flex justify-center">
         <div className="flex flex-col items-center">
@@ -233,8 +241,6 @@ const Documentation = () => {
           </button>
         )}
       </div>
-
-      <Return onClick={handleReturn} />
     </CardComponent>
   );
 };

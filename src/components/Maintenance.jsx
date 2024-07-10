@@ -4,6 +4,8 @@ import MntFormProduct from "./MntFormProduct";
 import { AiOutlineWarning, AiOutlineCheck } from "react-icons/ai";
 import { firestore, storage } from "../firebase";
 import { Tooltip } from "react-tooltip";
+import { AiOutlineLogout } from "react-icons/ai"; // Import the icon
+
 import {
   doc,
   updateDoc,
@@ -121,11 +123,20 @@ const Maintenance = () => {
 
   return (
     <CardComponent>
-      <div className="bg-gray-800 shadow-md text-white rounded-lg p-4 text-center">
-        <p className="text-3xl 2xl:text-4xl font-mono font-semibold ">
-          {" "}
-          BIENVENIDO AL MÓDULO DE CRONOGRAMA DE MANTENIMIENTO{" "}
-        </p>
+      <div className="flex justify-between items-center w-full p-4">
+        <h1 className="text-2xl text-white font-bold">FireVault</h1>
+        <div className="bg-rose-600 p-4 rounded-lg shadow-md text-center">
+          <p className="text-3xl text-white 2xl:text-4xl font-mono font-semibold">
+            BIENVENIDO AL MODULO DE CRONOGRAMA DE MANTENIMIENTO
+          </p>
+        </div>
+        <button
+          className="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center space-x-2"
+          onClick={handleReturn}
+        >
+          <AiOutlineLogout className="h-6 w-6" />
+          <span>Volver</span>
+        </button>
       </div>
       <div className="flex justify-items-center">
         <div className="w-full h-full gap-0 items-center align-middle ">
@@ -133,7 +144,7 @@ const Maintenance = () => {
             <MntFormProduct onSubmitFn={onSubmitFunction} />
 
             <div className='max-w-[400px]-w-full h-full py-16 bg-gray-50 px-8 rounded-lg my-4 mr-4'>
-              <label className="block bg-gray-900 text-white shadow-md rounded-full p-3 mb-5 text-center text-lg font-mono font-semibold">
+              <label className="block bg-neutral-900 text-white shadow-md rounded-full p-3 mb-5 text-center text-lg font-mono font-semibold">
                 Próximos mantenimientos
               </label>
               <label className="flex items-center justify-center text-gray-800 font-semibold my-8 text-lg ">
@@ -241,7 +252,6 @@ const Maintenance = () => {
           </div>
         </div>
       </div>
-      <Return onClick={handleReturn} />
     </CardComponent>
   );
 };
