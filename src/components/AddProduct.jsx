@@ -25,6 +25,8 @@ const uploadPdf = async (pdf, folder) => {
   });
 };
 
+
+
 const AddProduct = () => {
   const navigate = useNavigate();
   const {

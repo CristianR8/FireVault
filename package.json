@@ -16,6 +16,7 @@
     "@react-icons/all-files": "^4.1.0",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
+    "cors": "^2.8.5",
     "docxtemplater": "3.10",
     "docxtemplater-image-module-free": "^1.1.1",
     "firebase": "^10.1.0",

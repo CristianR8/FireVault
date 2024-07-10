@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "fire-vault"
-  }
+    "default": "firevault-b2f13",
+    "firevault": "firevault-b2f13"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }
